@@ -23,7 +23,7 @@ def ask_mistral(context, question, max_tokens=512):
     outputs = model.generate(**inputs, max_new_tokens=max_tokens, pad_token_id=tokenizer.eos_token_id)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-st.title("📄💬 Relationship Advice QA from Google Drive PDFs (Mistral-7B)")
+st.title("📄💬 Relationship Advice QA from Google Drive PDFs")
 
 # Google Drive folder link (your link)
 drive_folder_url = "https://drive.google.com/drive/folders/1kwncaedGeEguRj3b8K-mwRe3HuMnXmMt"
@@ -31,6 +31,8 @@ drive_folder_url = "https://drive.google.com/drive/folders/1kwncaedGeEguRj3b8K-m
 # Download PDFs into local /pdfs
 with st.spinner("Downloading PDFs from Google Drive..."):
     files = download_pdfs_from_drive(drive_folder_url)
+    st.write("Files downloaded:", files)
+
 
 if files:
     context = extract_text_from_folder("pdfs")
