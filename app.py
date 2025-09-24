@@ -7,7 +7,7 @@ import torch
 # Load model and tokenizer
 @st.cache_resource
 def load_model():
-    model_id = "mistralai/Mistral-7B-Instruct-v0.1"
+    model_id = "distilbert-base-uncased-distilled-squad"
     HF_TOKEN = os.environ.get("HF_TOKEN")  # <-- reads token from Streamlit secrets
 
     tokenizer = AutoTokenizer.from_pretrained(model_id, token=HF_TOKEN)
