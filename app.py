@@ -8,11 +8,14 @@ import torch
 @st.cache_resource
 def load_model():
     model_id = "mistralai/Mistral-7B-Instruct-v0.1"
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    HF_TOKEN = os.environ.get("HF_TOKEN")  # <-- reads token from Streamlit secrets
+
+    tokenizer = AutoTokenizer.from_pretrained(model_id, token=HF_TOKEN)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         torch_dtype=torch.float16,
-        device_map="auto"
+        device_map="auto",
+        token=HF_TOKEN
     )
     return tokenizer, model
 
