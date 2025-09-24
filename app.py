@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from pdf_utils import download_pdfs_from_drive, extract_text_from_folder
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForQuestionAnswering
 import torch
 
 # Load model and tokenizer
@@ -11,12 +11,8 @@ def load_model():
     HF_TOKEN = os.environ.get("HF_TOKEN")  # <-- reads token from Streamlit secrets
 
     tokenizer = AutoTokenizer.from_pretrained(model_id, token=HF_TOKEN)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        token=HF_TOKEN
-    )
+    model = AutoModelForQuestionAnswering.from_pretrained(model_id, token=HF_TOKEN)
+
     return tokenizer, model
 
 tokenizer, model = load_model()
